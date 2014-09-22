@@ -21,7 +21,7 @@
 	<!-- add edges here -->
 	<edge from="base">
 		<to>mpiblast-base</to>
-	<edge>
+	</edge>
 
 	<!-- enforce post section ordering -->
 	<!-- mpiblast-base post sections execute after base post sections -->
