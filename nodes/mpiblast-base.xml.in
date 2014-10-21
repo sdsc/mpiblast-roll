@@ -3,24 +3,17 @@
 <kickstart>
 
 
-	<description>
-	Your mpiblast roll description here
-	</description>
+<description>
+mpiBLAST - www.mpiblast.org
+</description>
 
-	<copyright>
-	Copyright (c) 2000 - 2012 The Regents of the University of California.
-	All rights reserved. Rocks(r) v5.5/v6.0 www.rocksclusters.org
-	
-	</copyright>
+<copyright>
+Copyright (c) 2000 - 2014 The Regents of the University of California.
+All rights reserved. Rocks(r) v5.5/v6.0 www.rocksclusters.org
+</copyright>
 
-	<changelog>
-	$Log$
-	</changelog>
-
-	<package>mpiblast_ROLLCOMPILER_ROLLMPI_ROLLNETWORK</package>
-	<package>mpiblast-roll-test</package>
-	<package>mpiblast-modules</package>
-	<package>roll-mpiblast-usersguide</package>
-
+<package>mpiblast_COMPILERNAME_MPINAME</package>
+<package>mpiblast-roll-test</package>
+<package>mpiblast-modules</package>
 
 </kickstart>

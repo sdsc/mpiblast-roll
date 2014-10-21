@@ -39,7 +39,7 @@ close(OUT);
 open(OUT, ">$TESTFILE.sh");
 print OUT <<END;
 . /etc/profile.d/modules.sh
-module load ROLLCOMPILER ROLLMPI_ROLLNETWORK mpiblast
+module load mpiblast
 cd $TESTFILE.dir/db/blast
 wget ftp://ftp.ncbi.nlm.nih.gov/blast/db/FASTA/drosoph.nt.gz
 gunzip drosoph.nt.gz
