@@ -2,7 +2,7 @@ PACKAGE     = mpiblast
 CATEGORY    = applications
 
 NAME        = $(PACKAGE)-modules
-RELEASE     = 0
+RELEASE     = 1
 PKGROOT     = /opt/modulefiles/$(CATEGORY)/$(PACKAGE)
 
 VERSION_SRC = $(REDHAT.ROOT)/src/$(PACKAGE)/version.mk
