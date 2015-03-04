@@ -1,4 +1,4 @@
-NAME       = mpiblast-roll-test
+NAME       = sdsc-mpiblast-roll-test
 VERSION    = 1
 RELEASE    = 0
 PKGROOT    = /root/rolltests

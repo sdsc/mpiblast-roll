@@ -8,7 +8,7 @@ ifndef ROLLMPI
 endif
 MPINAME := $(firstword $(subst /, ,$(ROLLMPI)))
 
-NAME           = mpiblast_$(COMPILERNAME)_$(MPINAME)
+NAME           = sdsc-mpiblast
 VERSION        = 1.6.0
 RELEASE        = 2
 PKGROOT        = /opt/mpiblast

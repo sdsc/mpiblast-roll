@@ -1,4 +1,3 @@
-#
 # $Id$
 #
 # @Copyright@
@@ -54,7 +53,8 @@
 # IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 # 
 # @Copyright@
-
+# NOTE: although the package Makefile supports a ROLLCOMPILER variable, we've
+# only been able to build successfully using the gnu compilers.
 ifndef ROLLCOMPILER
   ROLLCOMPILER = gnu
 endif
@@ -67,28 +67,11 @@ endif
 include Rolls.mk
 
 default:
-	for i in `ls nodes/*.in`; do \
-	  export o=`echo $$i | sed 's/\.in//'`; \
-	  cp $$i $$o; \
-	  for c in $(ROLLCOMPILER); do \
-	    COMPILERNAME=`echo $$c | awk -F/ '{print $$1}'`; \
-	    perl -pi -e "print and s/COMPILERNAME/$$COMPILERNAME/g if m/COMPILERNAME/" $$o; \
-	  done; \
-	  for m in $(ROLLMPI); do \
-	    MPINAME=`echo $$m | awk -F/ '{print $$1}'`; \
-	    perl -pi -e "print and s/MPINAME/$$MPINAME/g if m/MPINAME/" $$o; \
-	  done; \
-	  perl -pi -e '$$_ = "" if m/COMPILERNAME|MPINAME/' $$o; \
-	done
 	$(MAKE) ROLLCOMPILER="$(ROLLCOMPILER)" ROLLMPI="$(ROLLMPI)" roll
 
 clean::
 	rm -f _arch bootstrap.py
 
-distclean: clean
-	for i in `ls nodes/*.in`; do \
-	  export o=`echo $$i | sed 's/\.in//'`; \
-	  rm -f $$o; \
-	done
+distclean:: clean
 	rm -fr RPMS SRPMS
 	-rm -f build.log
