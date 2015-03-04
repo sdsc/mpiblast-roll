@@ -57,8 +57,25 @@
 REDHAT.ROOT = $(CURDIR)/../../
 
 -include $(ROCKSROOT)/etc/Rules.mk
-include Rules.mk
-include pull.mk
+include $(SDSCDEVEL)/Pull.mk
+include $(SDSCDEVEL)/Rules.mk
+
+$(NAME).spec: DESCRIPTION LICENSE
+
+DESCRIPTION:
+	$(MODULE_LOAD_CC); \
+        ( \
+          $(DESCRIBE_PKG); \
+          $(DESCRIBE_CC); \
+          $(DESCRIBE_MPI); \
+          $(DESCRIBE_CUDA) \
+        ) > $@
+
+LICENSE: $(SRC_DIRS)
+	$(CHECK_LICENSE_FILES)
+	echo "Virginia Polytechnic Institute and State University" > $@
+
+
 
 CC = gcc
 ifeq ("$(ROLLCOMPILER)", "intel")
@@ -86,9 +103,9 @@ MPISETUP = \
 
 build: $(SRC_DIRS)
 	( 			\
-	  $(COMPILERSETUP); \
-	  $(MKLSETUP); \
-	  $(MPISETUP); \
+	  $(MODULE_LOAD_CC); \
+          $(MODULE_LOAD_MPI); \
+	  $(MODULE_LOAD_MKL); \
 	  cd $(SOURCE_DIR); \
 	  export LINUX_MODE=$(CC); \
 	  ncbi/make/makedis.csh; \
