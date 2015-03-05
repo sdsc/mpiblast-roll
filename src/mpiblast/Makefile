@@ -64,47 +64,23 @@ $(NAME).spec: DESCRIPTION LICENSE
 
 DESCRIPTION:
 	$(MODULE_LOAD_CC); \
-        ( \
-          $(DESCRIBE_PKG); \
-          $(DESCRIBE_CC); \
-          $(DESCRIBE_MPI); \
-          $(DESCRIBE_CUDA) \
-        ) > $@
+	$(MODULE_LOAD_MPI); \
+	( \
+	  $(DESCRIBE_PKG); \
+	  $(DESCRIBE_CC); \
+	  $(DESCRIBE_MKL); \
+	  $(DESCRIBE_MPI); \
+	  $(DESCRIBE_CUDA) \
+	) > $@
 
 LICENSE: $(SRC_DIRS)
 	$(CHECK_LICENSE_FILES)
-	echo "Virginia Polytechnic Institute and State University" > $@
-
-
-
-CC = gcc
-ifeq ("$(ROLLCOMPILER)", "intel")
-  CC = icc
-endif
-ifeq ("$(ROLLCOMPILER)", "pgi")
-  CC = pgcc
-endif
-
-COMPILERSETUP =  \
-  module load $(ROLLCOMPILER) || true; \
-  echo === Compiler and version ===; \
-  $(CC) --version
-
-MKLSETUP = \
-  module load mkl || true; \
-  echo === MKL_ROOT ===; \
-  echo $${MKL_ROOT}; \
-  export MKLLIB=`find $${MKL_ROOT}/lib/* -maxdepth 0 | head -1`
-
-MPISETUP = \
-  module load $(ROLLMPI) || true; \
-  echo === MPIHOME ===; \
-  echo $${MPIHOME}
+	echo GPLv2 > $@
 
 build: $(SRC_DIRS)
-	( 			\
+	( \
 	  $(MODULE_LOAD_CC); \
-          $(MODULE_LOAD_MPI); \
+	  $(MODULE_LOAD_MPI); \
 	  $(MODULE_LOAD_MKL); \
 	  cd $(SOURCE_DIR); \
 	  export LINUX_MODE=$(CC); \
@@ -130,4 +106,4 @@ install::
 	@echo "::: Package $(NAME) install complete :::"
 
 clean::
-	rm -rf $(SOURCE_DIR)
+	rm -rf $(SOURCE_DIR) DESCRIPTION LICENSE

@@ -2,5 +2,6 @@
 module-whatis "mpiblast"
 module-whatis "Version: VERSION"
 module-whatis "Description: mpiblast"
+setenv MPIBLASTHOME /opt/mpiblast
 prepend-path PATH /opt/mpiblast/bin
 module load ROLLCOMPILER ROLLMPI mkl
