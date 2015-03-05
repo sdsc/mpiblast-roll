@@ -38,14 +38,19 @@ close(OUT);
 
 open(OUT, ">$TESTFILE.sh");
 print OUT <<END;
-. /etc/profile.d/modules.sh
 module load mpiblast
 cd $TESTFILE.dir/db/blast
 wget ftp://ftp.ncbi.nlm.nih.gov/blast/db/FASTA/drosoph.nt.gz
 gunzip drosoph.nt.gz
 mpiformatdb --nfrags=4 -i ./drosoph.nt -pF --quiet
 cd ../..
-mpirun -np 8 /opt/mpiblast/bin/mpiblast -d drosoph.nt  -i $TESTFILE.in -p blastn -o output
+output=`mpirun -np 8 /opt/mpiblast/bin/mpiblast -d drosoph.nt -i $TESTFILE.in -p blastn -o output 2>&1`
+if [[ "\$output" =~ "run-as-root" ]]; then
+  # Recent openmpi requires special option for root user
+  output=`mpirun --allow-run-as-root -np 8 /opt/mpiblast/bin/mpiblast -d drosoph.nt -i $TESTFILE.in -p blastn -o output 2>&1`
+fi
+echo \$output
+cat output
 END
 close(OUT);
 
@@ -58,13 +63,9 @@ if($appliance =~ /$installedOnAppliancesPattern/) {
 SKIP: {
 
   skip 'mpiblast not installed', 4 if ! $isInstalled;
-  `bash $TESTFILE.sh 2>&1`;
-  open(OUT, "<$TESTFILE.dir/output");
-  @output=<OUT>;
-  close(OUT);
-  ok(grep(/Score = 34.2 bits \(17\), Expect = 3.4/,@output) gt 0, 'mpiblast runs');
+  $output=`bash $TESTFILE.sh 2>&1`;
+  like($output, qr/Score = 34.2 bits \(17\), Expect = 3.4/, 'mpiblast runs');
 
-  skip 'modules not installed', 3 if ! -f '/etc/profile.d/modules.sh';
   `/bin/ls /opt/modulefiles/applications/mpiblast/[0-9]* 2>&1`;
   ok($? == 0, 'mpiblast module installed');
   `/bin/ls /opt/modulefiles/applications/mpiblast/.version.[0-9]* 2>&1`;
