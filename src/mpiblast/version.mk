@@ -10,7 +10,7 @@ MPINAME := $(firstword $(subst /, ,$(ROLLMPI)))
 
 NAME           = sdsc-mpiblast
 VERSION        = 1.6.0
-RELEASE        = 4
+RELEASE        = 5
 PKGROOT        = /opt/mpiblast
 
 SRC_SUBDIR     = mpiblast

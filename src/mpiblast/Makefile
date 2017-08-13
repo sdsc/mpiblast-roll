@@ -76,6 +76,7 @@ LICENSE: $(SRC_DIRS)
 	echo GPLv2 > $@
 
 build: $(SRC_DIRS)
+	patch $(SOURCE_DIR)/src/pio_intercept.cpp patch-files/pio_intercept.cpp.patch
 	( \
 	  $(MODULE_LOAD_CC); \
 	  $(MODULE_LOAD_MPI); \
@@ -84,7 +85,7 @@ build: $(SRC_DIRS)
 	  export LINUX_MODE=$(CC); \
 	  ncbi/make/makedis.csh; \
 	  export CFLAGS="-g -O0"; \
-	  export CXXFLAGS="-g -O0"; \
+	  export CXXFLAGS="-g -O0 -std=c++98"; \
 	  export CC=mpicc; \
 	  export CXX=mpicxx; \
 	  export CPPFLAGS=-I$(CURDIR)/$(SOURCE_DIR)/ncbi/include; \

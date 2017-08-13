@@ -1,0 +1,17 @@
+--- pio_intercept.cpp	2017-08-13 10:44:07.000000000 -0700
++++ patch-files/pio_intercept.cpp	2017-08-13 10:44:47.000000000 -0700
+@@ -75,6 +75,14 @@
+ #include <iostream>
+ #include <mpiblast_util.hpp>
+ 
++#ifndef va_copy
++# ifdef __va_copy
++#  define va_copy __va_copy
++# else
++#  define va_copy(d,s) ((d) = (s))
++# endif
++#endif
++
+ #define PARSE_BUF_SIZE 3*1024*1024 
+ #define BUFFER_LENGTH  2048
+ 
