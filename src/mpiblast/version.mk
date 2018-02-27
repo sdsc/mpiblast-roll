@@ -10,7 +10,7 @@ MPINAME := $(firstword $(subst /, ,$(ROLLMPI)))
 
 NAME           = sdsc-mpiblast
 VERSION        = 1.6.0
-RELEASE        = 5
+RELEASE        = 6
 PKGROOT        = /opt/mpiblast
 
 SRC_SUBDIR     = mpiblast
@@ -23,4 +23,5 @@ SOURCE_DIR     = mpiblast-$(SOURCE_VERSION)
 
 TGZ_PKGS       = $(SOURCE_PKG)
 
-RPM.EXTRAS     = AutoReq:No
+RPM.EXTRAS     = AutoReq:No\nAutoProv:No
+RPM.PREFIX     = $(PKGROOT)
